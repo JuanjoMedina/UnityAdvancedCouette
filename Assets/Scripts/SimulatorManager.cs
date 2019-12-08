@@ -8,12 +8,18 @@ public class SimulatorManager : MonoBehaviour
     public static SimulatorManager instance;
     public GameObject cube;
     public GameObject particle;
+    public float MaxVel = 0.01f;
 
     private GameObject[][][] layers;
     private double[] result;
+    private System.Timers.Timer timer = new System.Timers.Timer(200);
+    bool nextStep = false;
+    bool firstTick = true;
     // Start is called before the first frame update
     void Awake()
     {
+        timer.Elapsed += Timer_Elapsed;
+        timer.Start();
         if (instance == null)
             instance = this;
         else if (instance != this)
@@ -43,13 +49,28 @@ public class SimulatorManager : MonoBehaviour
 
     }
 
+    private void Timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+    {
+        if (!firstTick)
+        {
+            nextStep = true;
+            firstTick = true;
+            timer.Stop();
+        }
+        else
+            firstTick = false;
+    }
+
     // Update is called once per frame
     void Update()
     {
-        result=Crank_Nicolson_Method.CrankNicolson(5000,12.5,1f/(layers.Length-1),result);
-        ChangeVelocities();
-
-
+        if (nextStep)
+        {
+            result = Crank_Nicolson_Method.CrankNicolson(5000, 12.5, 1f / (layers.Length - 1), result);
+            ChangeVelocities();
+            nextStep = false;
+            timer.Start();
+        }
     }
 
     public GameObject[][][] getLayers()

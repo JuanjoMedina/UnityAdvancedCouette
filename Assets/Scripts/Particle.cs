@@ -8,10 +8,9 @@ public class Particle : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
+        Velocity = SimulatorManager.instance.MaxVel;
         int length = SimulatorManager.instance.getLayers().Length;
-        if (System.Convert.ToInt32((length - 1) * this.transform.position.y) == length - 1)
-            Velocity = 0.1f;
-        else
+        if (System.Convert.ToInt32((length - 1) * this.transform.position.y) != length - 1)
             Velocity = 0;
     }
 

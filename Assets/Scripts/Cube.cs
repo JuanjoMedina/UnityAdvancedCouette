@@ -5,11 +5,11 @@ using UnityEngine;
 public class Cube : MonoBehaviour
 {
 
-    public float Velocity = 0.1f;
+    public float Velocity;
     // Start is called before the first frame update
     void Start()
     {
-        
+        Velocity = SimulatorManager.instance.MaxVel;
     }
 
     // Update is called once per frame

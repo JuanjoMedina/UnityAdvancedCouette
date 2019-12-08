@@ -643,5 +643,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 7630250396557291929, guid: cd0b14c219cc83f448c42bf872cc9ebc,
         type: 3}
+    - target: {fileID: 1821026382218357209, guid: 68b9836b4fdb70445a5c60d0e0f1e217,
+        type: 3}
+      propertyPath: MaxVel
+      value: 0.02
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 68b9836b4fdb70445a5c60d0e0f1e217, type: 3}
