@@ -8,13 +8,14 @@ public class SimulatorManager : MonoBehaviour
     public static SimulatorManager instance;
     public GameObject cube;
     public GameObject particle;
-    public float MaxVel = 0.01f;
+    public float PlateVel = 0f;
 
     private GameObject[][][] layers;
     private double[] result;
+    private int step = 0;
     private System.Timers.Timer timer = new System.Timers.Timer(200);
-    bool nextStep = false;
-    bool firstTick = true;
+    private bool nextStep = false;
+    private bool firstTick = true;
     // Start is called before the first frame update
     void Awake()
     {
@@ -66,6 +67,7 @@ public class SimulatorManager : MonoBehaviour
     {
         if (nextStep)
         {
+            result[result.Length - 1] = SinusoidalVel();
             result = Crank_Nicolson_Method.CrankNicolson(5000, 12.5, 1f / (layers.Length - 1), result);
             ChangeVelocities();
             nextStep = false;
@@ -96,6 +98,15 @@ public class SimulatorManager : MonoBehaviour
                 }
             }
         }
+    }
+
+    private float SinusoidalVel()
+    {
+        float result = 0.05f * Mathf.Sin(2f * (float)Math.PI * 1/20f * step);
+        PlateVel = result;
+        step++;
+        return result;
+
     }
     
 }
